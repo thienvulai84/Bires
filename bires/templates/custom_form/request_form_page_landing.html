@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+{% block content %}
+<!-- ====== SECTION2 ======= -->
+<div class="container">
+    <div class="row">
+        <div class="col-12 my-5">
+            <h1 class="title mb-3">{{ self.title }}</h1>
+            {{ self.thank_you_text|richtext }}
+            <a href="{{ self.url }}">Back</a>
+        </div>
+    </div>
+</div>
+<!-- ====== END SECTION2 ======= -->
+{% endblock %}

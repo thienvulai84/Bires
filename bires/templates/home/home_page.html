@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+    <meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0 m-0">
+
+    <!-- ====== BANNER ======= -->
+    {% image page.banner_image fill-787x500 as img_banner %}    
+    <div class="container-fluid banner-section" 
+        style="background-image: url({{ page.banner_svg_image.url }}); background-position: center;background-size: contain;background-repeat: no-repeat;">
+        <div class="row">
+            <div class="col-12">
+                <h1>{{ self.banner_title }}</h1>
+                <h3>{{ self.banner_subtitle }}</h3>
+            </div>
+        </div>
+    </div>
+    <!-- ====== END BANNER ======= -->
+
+
+    <!-- ====== PROJECTS ======= -->
+    {% if projects %}
+        <div class="container project-section py-5 ">
+            <div class="row">
+                <div class="col-md-12 mx-auto">
+                    <h2 class="text-center mb-3">
+                        {% for item in settings.site_settings.SiteSettings.projects.all %}
+                            {% if item.title_on_homepage %}
+                                {{ item.title_on_homepage }}
+                            {% endif %}
+                        {% endfor %}
+                    </h2>
+                </div>
+            </div>
+
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow border-0 rounded" style="height: 500px;">
+                            {% image project.featured_image fill-252x168 as featured_image %}
+                            <img class="card-img-top" src="{{ featured_image.url }}"
+                                alt="{{ featured_image.alt }}">
+                                {% if project.hot_title != NONE %}
+                                    <span class="badge badge-secondary">
+                                        {{ project.hot_title }}
+                                    </span>
+                                {% endif %}
+                                
+                            <div class="card-body project_card">
+
+                                <p class="card-text title">
+                                    {% for item in settings.site_settings.SiteSettings.projects.all %}
+                                        <a href="/{{ item.slug }}/{{ project.slug }}" class="stretched-link">
+                                            {{ project.title }}
+                                        </a>
+                                    {% endfor %}
+                                </p>
+                                <p class="card-text">{{ project.address }}</p>
+                                <p class="card-text">{{ project.city }}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <p>
+                {% for item in settings.site_settings.SiteSettings.projects.all %}
+                    {% if settings.site_settings.SiteSettings.read_more_link %}
+                        <a href="/{{ item.slug }}/" class="all-results">
+                            {{ settings.site_settings.SiteSettings.read_more_link }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+            </p>
+            
+        </div>
+    {% endif %}
+    <!-- ====== END PROJECTS ======= -->
+
+
+    <!-- ====== BLOGS ======= -->
+    {% if blogs %}
+        <div class="container-fluid blog-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="text-center my-5">
+                            {% for item in settings.site_settings.SiteSettings.blogs.all %}
+                                {% if item.title_on_homepage %}
+                                    {{ item.title_on_homepage }}
+                                {% endif %}
+                            {% endfor %}
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 border border-left-0 border-top-0 border-bottom-0" style="border: 2px solid">
+                        {% for item in settings.site_settings.SiteSettings.blogs.all %}
+                            <a href="/{{ item.slug }}/{{ blogs.first.slug }}">
+                                <h5 class="blog-title">
+                                    {{ blogs.first.title }}
+                                </h5>
+                                <div>
+                                    {% image blogs.first.featured_image original as blog_featured_image %}
+                                    <img src="{{ blog_featured_image.url }}"  style="width:100%;">
+                                </div>
+
+                                <p class="mt-3 blog-seo">
+                                    {{ blogs.first.search_description }}
+                                </p>                                
+                            </a>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="col-md-6">
+                        {% for blog in blogs %}
+                            {% if forloop.counter0 != 0 %}
+                                {% for item in settings.site_settings.SiteSettings.blogs.all %}
+                                    <a href="/{{ item.slug }}/{{ blog.slug }}">
+                                        <h5 class="blog-title">{{ blog.title }}</h5>
+                                        <div class="row">
+                                            <div class="col-md-4 text-center">
+                                                {% image blog.featured_image fill-160x120 as blog_featured_image %}
+                                                <img src="{{ blog_featured_image.url }}"  style="width:100%;">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p class="blog-seo">
+                                                    {{ blog.search_description }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <hr class="divider">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="mb-5"> 
+                            {% for item in settings.site_settings.SiteSettings.blogs.all %}
+                                {% if settings.site_settings.SiteSettings.read_more_link %}
+                                    <a href="/{{ item.slug }}/" class="all-results">
+                                        {{ settings.site_settings.SiteSettings.read_more_link }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- ====== END BLOGS ======= -->
+
+    <!-- ====== REALTOR ======= -->
+    {% if realtors %}
+        <div class="container-fluid realtor-section mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center mb-3">
+                            {% for item in settings.site_settings.SiteSettings.realtors.all %}
+                                {% if item.title_on_homepage %}
+                                    {{ item.title_on_homepage }}
+                                {% endif %}
+                            {% endfor %}
+                        </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for realtor in realtors %}
+                        {% image realtor.image original as realtor_image %}
+                        <div class="col-md-4">
+                            <div class="card box-shadow member_wrap p-3 shadow">
+                                <img class="card-img-top" src="{{ realtor_image.url }}" alt="{{ realtor_image.alt }}">
+                                <div class="card-body text-center">
+
+                                    <p class="card-text font-weight-bold">{{ realtor.name }}</p>
+                                    <p class="card-text">
+                                        {{ realtor.position_title }}
+                                    </p>
+                                    <p class="card-text">
+                                        {{ realtor.short_description }}
+                                    </p>
+                                    <p class="card-text view-profile text-uppercase">
+                                        {% for item in settings.site_settings.SiteSettings.realtors.all %}
+                                            <a href="/{{ item.slug }}/{{ realtor.slug }}" class="stretched-link">
+                                                {{ item.profile_link }}
+                                            </a>
+                                        {% endfor %}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="ml-3 mt-5">
+                            {% for item in settings.site_settings.SiteSettings.realtors.all %}
+                                {% if settings.site_settings.SiteSettings.read_more_link %}
+                                    <a href="/{{ item.slug }}/" class="all-results">
+                                        {{ settings.site_settings.SiteSettings.read_more_link }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </p> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- ====== END REALTOR ======= -->
+</div>
+{% endblock %}

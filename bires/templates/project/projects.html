@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+    <meta name="description" content="{{ project_listing_page.search_description }}">
+{% endblock %}
+
+{% block content %}
+{% load project_extras %}
+<div class="container listing_page py-5">
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="mb-5">{{ project_listing_page.title }}</h1>            
+            {% for project in project_page_object %}
+                {% image project.featured_image fill-240x160 as img %}
+                {% for item in settings.site_settings.SiteSettings.projects.all %}
+                    <a href="/{{ item.slug }}/{{ project.slug }}">
+                        <div class="card border-0 mb-5">
+                            <div class="row no-gutters">
+                                <div class="col-auto text-center">
+                                    <img src="{{ img.url }}" class="img-fluid" alt="">
+                                    {% if project.hot_title != NONE %}
+                                    <span class="badge badge-secondary listing_page_badge">
+                                        {{ project.hot_title }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="col mb-4">
+                                    <div class="card-block pl-4">
+                                        <h4 class="card-title">
+                                            {{ project.title }}
+                                        </h4>
+                                        <p class="card-text city">{{ project.city }}</p>
+                                        <p class="card-text information">
+                                            {{ project.general_information|safe|truncatewords:20 }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endfor %}
+
+            <div>
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link {% if not project_page_object.has_previous %}btn disabled{% endif %}" 
+                                href="{% if project_page_object.has_previous %}{% my_url project_page_object.previous_page_number 'page' request.GET.urlencode %}{% else %}{% my_url project_page_object.project_number 'page' request.GET.urlencode %}{% endif %}">
+                                <i class="fas fa-caret-left" style="color: #E40F2B;"></i>
+                            </a>
+                        </li>
+                        {% for i in project_page_object.paginator.page_range %}
+                            <li class="page-item {% if i == project_page_object.number %}active{% endif %}">
+                                <a class="page-link" href="{% my_url i 'page' request.GET.urlencode %}">{{ i }} 
+                                    <span class="sr-only">(current)</span></a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item">
+                            <a class="page-link {% if not project_page_object.has_next %}btn disabled{% endif %}" 
+                                href="{% if project_page_object.has_next %}{% my_url project_page_object.next_page_number 'page' request.GET.urlencode %}{% else %}{% my_url project_page_object.project_number 'page' request.GET.urlencode %}{% endif %}">
+                                <i class="fas fa-caret-right" style="color: #E40F2B;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card box-shadow member_wrap p-3">
+                <div class="card-body">
+                    <p class="card-text name">search projects</p>
+                    <div class="card-text listing_page_form">
+                        <form action="" method="get" id="frm_search" class="frm_search">
+                            {% for city in cities %}
+                                <input type="checkbox" value="{{ city.city }}" name="city" id="id_city"> 
+                                {{ city.city }}<br>                                    
+                            {% endfor %}
+                            <button type="submit" class="btn btn-block btn_filter mt-2" id="btn_filter">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

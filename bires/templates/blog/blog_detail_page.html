@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+<style>
+    .panel-group .panel {
+        border-radius: 0;
+        box-shadow: none;
+        border-color: #EEEEEE;
+    }
+
+    .panel-default > .panel-heading {
+        padding: 0;
+        border-radius: 0;
+        color: rgb(51, 63, 72);
+        background-color: #FAFAFA;
+        border-color: #EEEEEE;
+    }
+
+    .panel-title {
+        font-size: 14px;
+    }
+
+    .panel-title > a {
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+    }
+
+    .more-less {
+        float: right;
+        color: rgb(51, 63, 72);
+    }
+
+    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        border-top-color: #EEEEEE;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ====== PAGE DETAIL 1 ======= -->
+<div class="container page_detail py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-3 title">
+                {{ self.title }}
+            </h1>
+            <p>
+                {{ self.created_at|date:'d M, yy' }}
+            </p>
+
+            <p class="status">
+                {% if self.categories.count > 0  %}
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    {% for category in self.categories.all %}
+                        {% if category == self.categories.last %}
+                            {{ category }}
+                        {% else %}
+                            {{ category }} , 
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}&nbsp;&nbsp;
+                {% if self.tags.count > 0  %}
+                    <i class="fa fa-tag" aria-hidden="true"></i>
+                    {% for tag in self.tags.all %}
+                        {% if tag == self.tags.last %}
+                            {{ tag }}
+                        {% else %}
+                            {{ tag }} , 
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-9 pr-0">
+            <div class="card mb-4 box-shadow border-0">
+                <div class="card-body">
+                    <p class="card-text status text-center">
+                        {% image self.featured_image original as img%}
+                        <img src="{{ img.url }}" alt="{{ img.alt }}" style="width: 100%;">
+                    </p>
+                    <p class="card-text content">{{ self.content|richtext }}</p>
+                </div>
+            </div>
+            
+            <div style="display: none;">
+                <hr class="divider">
+                <!-- Question and answers -->
+                {% if self.question_answer_blog.first.question_answer.question_answer_questionanswer %}
+                    <h2>Question & Answer</h2>
+                    <div class="col-md-12 demo mt-2">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                            {% for qa in self.question_answer_blog.first.question_answer.question_answer_questionanswer.all %}
+                                <div class="card">
+                                    <div class="card-header" id="heading{{ forloop.counter0 }}">
+                                        <a class="btn btn-link btn-block collapsed text-left question_answer" data-toggle="collapse" data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter0 }}">
+                                            <h5 class="mb-0">{{ qa.question  }}</h5>
+                                        </a>
+                                    </div>
+                                    <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="heading{{ forloop.counter0 }}" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text answer">
+                                                {{ qa.answer  }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-3 pl-0">
+            <div class="card box-shadow">
+                <div class="card-body">
+                    <p class="card-text sidebar">
+                        <img src="https://bires-project.s3-ap-southeast-1.amazonaws.com/images/blog1.original.jpg" alt="" style="width: 100%;">
+                    </p>
+                    <p class="card-text sidebar">
+                        <img src="https://bires-project.s3-ap-southeast-1.amazonaws.com/images/blog2.original.jpg" alt="" style="width: 100%;">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function toggleIcon(e) {
+    $(e.target)
+        .prev(".panel-heading")
+        .find(".more-less")
+        .toggleClass("glyphicon-plus glyphicon-minus");
+    }
+    $(".panel-group").on("hidden.bs.collapse", toggleIcon);
+    $(".panel-group").on("shown.bs.collapse", toggleIcon);
+</script>
+<!-- ====== END PAGE DETAIL ======= -->
+{% endblock %}

@@ -1,0 +1,548 @@
+/* GENERAL CSS */
+    /* body css */
+    body {
+        background-color: #e2fbf3;
+        color: #063827;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    a.general_link:link {
+        color: #063827;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    a.general_link {
+        color: #063827;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    a.general_link:hover {
+        color: #f47a62;
+        text-decoration: none;
+    }
+
+    
+
+    a.project_title_link {
+        color: #f47a62;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+
+    }
+
+    a.project_title_link:link {
+        color: #f47a62;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+
+    }
+    a.project_title_link:hover {
+        color: #e2fbf3;
+        text-decoration: none;
+    }
+
+
+    .card {
+        border-radius: 5px;
+    }
+
+
+
+/* END GENERAL CSS */
+/* ------------------------------------------------------------- */
+
+
+/* SECTION1 */
+    /* Homepage */
+    /* Navbar Menu */
+    .navbar-expand-lg {
+        background-color: rgba(22, 201, 141, 0.5);
+        border-bottom: 1px solid #da1e28;
+    }
+
+    .navbar-expand-lg .navbar-nav a.nav-link {
+        color: #063827;
+        line-height: 37px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .navbar-expand-lg .navbar-nav .nav-link:hover{
+        margin: 0;
+        display: block;
+        /* background-color: red; */
+        color: #D9CBB8;
+        text-decoration: none;
+        font-size: 18px;
+        transform: scale(1.1);
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(226, 251, 243)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    }
+
+    .navbar-toggler {
+        border-color: rgb(226, 251, 243);
+    }
+    /* End Homepage */
+
+/* END SECTION1 */
+/* ------------------------------------------------------------- */
+
+
+/* SECTION2 */
+    /* Homepage */
+    .section2 {
+        /* background-image: url("../images/Jumbotron.jpg"); */
+        background-size: cover;
+        background-size: 100% 500px;
+        height: 500px;
+        color: #e2fbf3;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .section2 h1.title {
+        font-size: 300%;
+        font-weight: bold;
+    }
+
+    .section2 h3 {
+        font-size: 150%;
+        font-weight: bold;
+    }/* End Homepage */
+
+/* END SECTION2 */
+/* ------------------------------------------------------------- */
+
+/* SECTION3 */
+    /* Homepage */
+    .section3 .card-img, .card-img-top {
+        position: relative;
+    }
+    .section3 h2 {
+        font-size: 40px;
+    }
+
+    .section3 .card:hover {
+        transform: scale(1.1);
+        transition: 0.5s;
+    }
+
+    .section3 a:hover {
+        text-decoration: none;
+    }
+
+    .section3 .badge-secondary {
+        position: absolute;
+        background-color: #f47a62;
+        right: 20px;
+        top: 20px;
+        border-radius: 0px;
+        color: #e2fbf3;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .section3 .card-body{
+        color: #063827;
+        background-color: #e2fbf3;
+        height: 230px;
+    }
+
+    .section3 p.card-text.title {
+        color: #f47a62;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .section3 p.card-text.city {
+        color: #f47a62;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .section3 p.card-text.address {
+        color: #16c98d;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .section3 p.card-text.description {
+        /* color: #e2fbf3; */
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .section3 .card {
+        width: 100%;
+    }
+
+    .section3 a {
+        font-weight: bold;
+    }/* End Homepage */
+/* END SECTION3 */
+/* ------------------------------------------------------------- */
+
+
+/* SECTION4 */
+    /* Homepage */
+    .section4 {
+        background-color: white;
+    }
+
+    .section4 h2 {
+        font-size: 40px;
+    }/* End Homepage */
+
+/* END SECTION4 */
+/* ------------------------------------------------------------- */
+
+
+/* SECTION5 */
+    .section5 h2 {
+        font-size: 40px;
+    }
+
+    .section5 div.member_wrap {
+        background-color: white;
+        width: 100%;
+    }
+
+    .section5 p.card-text.name {
+        font-size: 20px;
+        text-transform: uppercase;
+        color: #16c98d;
+    }
+
+    .section5 p.card-text.full_name {
+        font-size: 24px;
+        text-transform: uppercase;
+        color: #16c98d;
+        font-weight: bold;
+    }
+
+    .section5 p.card-text.position {
+        font-size: 20px;
+        font-weight: bold;
+        color: #f47a62;
+    }
+
+    .section5 p.card-text.email {
+        font-size: 18px;
+    }
+
+    .section5 p.card-text.title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #f47a62;
+    }
+
+    .section5 p.card-text.description {
+        font-size: 14px;
+    }
+    
+    .section5 button.btn_profile {
+        font-size: 14px;
+        background-color: #f85a3b;
+        color: #e2fbf3;
+        font-weight: bold;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+/* END SECTION5 */
+/* ------------------------------------------------------------- */
+
+
+/* SECTION6 */
+    /* Homepage */
+    /* Footer */
+    .section6 div.footer-copyright {
+        font-weight: 400;
+        font-style: normal;
+        line-height: 23px;
+        font-size: 1px;
+        color: #c0c0c0;
+    }
+
+    .section6 .upper_footer {
+        background-color: #333333;
+        color: #e2fbf3;
+    }
+
+    .section6 a:link {
+        color: #e2fbf3;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .section6 a {
+        color: #e2fbf3;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .section6 a:hover {
+        color: #f47a62;
+        text-decoration: none;
+    }
+
+    .section6 p.short_description {
+        font-size: 14px;
+    }/* End Homepage */
+
+/* END SECTION6 */
+/* ------------------------------------------------------------- */
+
+
+/* LISTING PAGE */
+.listing_page listing_page_image {
+    position: relative;
+}
+
+.listing_page .listing_page_badge {
+    position: absolute;
+    background-color: #f47a62;
+    right: 20px;
+    top: 20px;
+    border-radius: 0px;
+    color: #e2fbf3;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.listing_page p.card-text.title a {
+    color: #f47a62;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.listing_page p.card-text.title a:link {
+    color: #f47a62;
+}
+
+.listing_page p.card-text.title a:hover {
+    color: #e2fbf3;
+    /* text-decoration: none; */
+}
+
+.listing_page p.card-text.price {
+    color: #f47a62;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.listing_page p.card-text.address {
+    color: #16c98d;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.listing_page p.card-text.description {
+    color: #e2fbf3;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.listing_page p.card-text.feature {
+    color: #16c98d;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.listing_page .listing_page_detail{
+    background-color: #063827;
+}
+
+.listing_page p.card-text.name {
+    color: #063827;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.listing_page label {
+    color: #063827;
+    font-size: 14px;
+}
+
+.listing_page .btn_filter {
+    background-color: #16c98d;
+    color: #e2fbf3;
+    font-size: 16px;
+    font-weight: bold;
+}
+.listing_page li.page-item.active a.page-link{
+    background-color: #f47a62;
+    color: #e2fbf3;
+    font-weight: bold;
+    border: none;
+}
+
+.listing_page ul.pagination li a.page-link {
+    border: none;
+    margin: 2px;
+    color: #063827;
+}
+
+.listing_page a.projects_link:hover {
+    text-decoration: none;
+}
+
+/* END LISTING PAGE */
+/* ------------------------------------------------------------- */
+
+
+/* PAGE DETAIL */
+    .page_detail ol.breadcrumb {
+        background-color: #e2fbf3;
+        color: #063827;
+        font-size: 14px;
+    }
+
+    .page_detail .breadcrumb-item+.breadcrumb-item::before {
+        display: inline-block;
+        padding-right: .5rem;
+        color: #063827;
+        content: ">";
+    }
+
+    .page_detail .breadcrumb-item a {
+        color: #063827;
+        font-size: 14px;
+    }
+
+    .page_detail .breadcrumb-item a:link {
+        color: #063827;
+        font-size: 14px;
+    }
+
+    .page_detail .breadcrumb-item a:hover {
+        color: #063827;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .page_detail .hot_title {
+        background-color: #f47c62;
+        color: #e2fbf3;
+        font-size: 16px;
+    }
+
+    .page_detail .full_address {
+        color: #16c98d;
+        font-size: 14px;
+    }
+
+    .page_detail div.card-body {
+        font-size: 14px;
+        color: #063827;
+    }
+
+    .page_detail a.checkbox_link {
+        color: #f47c62;
+        font-size: 14px;
+    }
+
+    .page_detail a.checkbox_link:link {
+        color: #f47c62;
+        font-size: 14px;
+    }
+
+    .page_detail a.checkbox_link:hover {
+        color: #f47c62;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .page_detail button {
+        background-color: #16c98d;
+        color: #e2fbf3;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .page_detail .city {
+        color: #f47a62;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .page_detail .title_description {
+        color: #063827;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    
+    .page_detail .status {
+        color: #16c98d;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    /* button.btn.btn-link.collapse.btn_QA 
+    .btn:not(:disabled):not(.disabled) {
+        text-decoration: none;
+        text-align: left;
+        width: 100%;
+        cursor: pointer;
+    } */
+
+/* END PAGE DETAIL */
+/* ------------------------------------------------------------- */
+
+/* PROJECT DETAIL CAROUSEL */
+    #carouselExampleControls .list-inline {
+        white-space:nowrap;
+        overflow-x:auto;
+    }
+
+    #carouselExampleControls .carousel-indicators {
+        position: static;
+        left: initial;
+        width: initial;
+        margin-left: initial;
+    }
+
+    #carouselExampleControls .carousel-indicators > li {
+        width: initial;
+        height: initial;
+        text-indent: initial;
+    }
+
+    #carouselExampleControls .carousel-indicators > li.active img {
+        opacity: 1;
+    }
+
+/* END PROJECT DETAIL CAROUSEL */
+/* ------------------------------------------------------------- */
+
+
+
+/* PAGE DETAIL */
+
+
+/* END PAGE DETAIL */
+/* ------------------------------------------------------------- */

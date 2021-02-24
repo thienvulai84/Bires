@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+
+{% block content %}
+<!-- ====== REALTOR ======= -->
+<div class="container-fluid my-5">
+    <div class="container">
+        <div class="row pt-3">
+            <div class="col-md-4">
+                <div class="card box-shadow member_wrap p-3">
+                    <p class="card-text text-uppercase font-weight-bold">{{ self.name }}</p>
+                    {% image self.image original as img %}
+                    <img class="card-img-top" src="{{ img.url }}" alt="{{ img.alt }}" width="100%" >
+                    <div class="card-body">                        
+                        <p class="card-text position">
+                            {{ self.position_title }}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-envelope"></i> {{ self.email }}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-phone"></i> {{ self.phone }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="pl-2" >
+                    <p>
+                        {{ self.description }}
+                    </p>
+                    <h4 class="mt-5">
+                        Social Media & Website
+                    </h4>
+                    <hr>
+
+                    {% if self.link_profile1 %}
+                        <p>
+                            <a href="{{ self.link_profile1 }}">{{ self.link_profile1 }}</a>
+                        </p>
+                    {% endif %}
+
+                    {% if self.link_profile2 %}
+                        <p>
+                            <a href="{{ self.link_profile2 }}">{{ self.link_profile2 }}</a>
+                        </p>
+                    {% endif %}
+
+                    {% if self.link_profile3 %}
+                        <p>
+                            <a href="{{ self.link_profile3 }}">{{ self.link_profile3 }}</a>
+                        </p>
+                    {% endif %}
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ====== END REALTOR ======= -->
+{% endblock %}

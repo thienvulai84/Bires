@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+{% block content %}
+<!-- ====== SECTION2 ======= -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 my-5 custom_page">
+            <h1 class="title mb-3">{{ self.title }}</h1>
+            {{ self.content|richtext }}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+<!-- ====== END SECTION2 ======= -->
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+    <meta name="description" content="{{ project.search_description }}">
+{% endblock %}
+
+{% block content %}
+<!-- ====== PAGE DETAIL 1 ======= -->
+<div class="container page_detail py-5">
+    <div class="row">
+        <div class="col-md-12">
+            {% if project.get_ancestors|length > 1 %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb pl-0">
+                        {% for page in project.get_ancestors %}
+                            {% if page != project.get_ancestors.1 %}
+                                {% if page.is_root == False %}                                    
+                                    <li class="breadcrumb-item">
+                                        {% for item in settings.site_settings.SiteSettings.projects.all %}
+                                            <a href="/{{ page.slug }}">{{ page.title }}</a>
+                                        {% endfor %}
+                                    </li>
+                                {% else %}
+                                    <li class="breadcrumb-item">
+                                        <a href="/">Home</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <li class="breadcrumb-item ”active”">{{ project.title }}</li>
+                    </ol>
+                </nav>
+            {% endif %}
+
+            <h2 class="mb-3 title">
+                {{ project.title }} 
+                {% if project.hot_title != NONE %}
+                    <span class="badge badge-secondary hot_title">{{ project.hot_title }}</span>
+                {% endif %}
+            </h2>
+
+            
+            <p class="status">
+                {% if project.categories.count > 0  %}
+                <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    {% for category in project.categories.all %}
+                        {% if category == project.categories.last %}
+                            {{ category }}
+                        {% else %}
+                            {{ category }} - 
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 border-0">
+                <p class="card-text my-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ project.address }} ({{ project.status }})
+    
+                    <span class="float-right">
+                        <i class="fas fa-city"></i> {{ project.city }}
+                    </span>
+                </p>
+                <div id="carouselExampleControls" class="carousel slide p-2" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for carousel_img in project.project_detail_carousel_images.all %}
+                            {% image carousel_img.project_detail_carousel_image fill-640x427 as img %}
+                            <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}" 
+                                data-slide-number="{{ forloop.counter0 }}">
+                                <img class="d-block w-100" src="{{ img.url }}" alt="{{ img.alt }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+
+                    <ul class="carousel-indicators list-inline">
+                        {% for carousel_img in project.project_detail_carousel_images.all %}
+                            {% image carousel_img.project_detail_carousel_image fill-80x60 as img1 %}
+                            <li data-target="#carouselExampleControls" data-slide-to="{{ forloop.counter0 }}" 
+                                class="list-inline-item {% if forloop.counter == 1 %}active{% endif %}">
+                                <a href="{{ img1.url }}" data-lightbox="library"><img src="{{ img1.url }}" alt="{{ img1.alt }}" ></a>
+                            </li>                  
+                        {% endfor %}
+                    </ul>
+                </div>
+                <p class="card-text">
+                    {{ project.general_information|richtext }}
+                </p>
+
+                {% for project_part_item in project.project_parts.all %}
+                    <hr class="divider">
+
+                    <h4>{{ project_part_item.part_title }}</h4>
+                    <p>
+                        {{ project_part_item.part_content|richtext }}
+                    </p>
+                {% endfor %}
+                
+                <div style="display: none;">
+                    <hr class="divider">
+                    <!-- Question and answers -->
+                    {% if project.question_answer_project.first.question_answer.question_answer_questionanswer %}
+                        <h2>Question & Answer</h2>
+                        <div class="col-md-12 demo mt-2">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                                {% for qa in project.question_answer_project.first.question_answer.question_answer_questionanswer.all %}
+                                    <div class="card">
+                                        <div class="card-header" id="heading{{ forloop.counter0 }}">
+                                            <a class="btn btn-link btn-block collapsed text-left question_answer" data-toggle="collapse" data-target="#collapse{{ forloop.counter0 }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter0 }}">
+                                                <h5 class="mb-0">{{ qa.question  }}</h5>
+                                            </a>
+                                        </div>
+                                        <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="heading{{ forloop.counter0 }}" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p class="card-text answer">
+                                                {{ qa.answer  }}
+                                            </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Form for sending message -->
+        <div class="col-md-4">
+            <div class="card box-shadow member_wrap p-3">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-5">
+                            {% image project.project_realtor.first.realtor_page.image original as realtor_img  %}
+                            <img src="{{ realtor_img.url }}" class="img-fluid" alt="{{ realtor_img.alt }}">
+                        </div>
+                        <div class="col-md-7">
+                            <i class="fas fa-user"></i>
+                            <span class="card-text title">
+                                {{ project.project_realtor.first.realtor_page.name }}<br>
+                                {{ project.project_realtor.first.realtor_page.position_title }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="card-text">
+                                <div class="div_form" id="div_form" {% if is_submitted %} style="display: none;" {% endif %}>
+                                    <form action="{% url 'project_request_form' project.slug %}" class="page_detail_form" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                        </div>
+                                
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+                                        </div>
+                                
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required name="email" id="email" placeholder="Email">
+                                        </div>
+                                
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="description" id="description" rows="3"
+                                                placeholder="Hello I am interested in this project"></textarea>
+                                        </div>
+                                
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" name="term_condition" id="term_condition" required> 
+                                            <label class="form-check-label" for="Term and Conditions">
+                                                <span class="checkbox_content">By submitting this form I agree to</span> <span class="checkbox_link">Terms
+                                                    and Conditions</span>
+                                            </label>
+                                        </div>
+                                    
+                                
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-block">Send</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <div class="div_when_submitting" id="div_when_submitting" {% if is_submitted %} style="display: block;" {% else %} style="display: none;" {% endif %}>
+                                    <p>
+                                        Thank you for sending us the request. We will contact you as soon as possible.                               
+                                    </p>
+                                    <p>
+                                        If you would like to send another request, please click on the button below. 
+                                    </p>
+                                    <p>                                        
+                                        <button type="button" class="btn btn-block" onclick="activate_form()">
+                                            Send another request
+                                        </button>
+                                    </p>
+                                
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ====== END PAGE DETAIL ======= -->
+{% endblock %}

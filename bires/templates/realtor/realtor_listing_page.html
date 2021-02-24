@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid section5 my-5">
+    <!-- ====== REALTOR ======= -->
+    {% if realtors %}
+        <div class="container-fluid realtor-section mt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="text-center mb-3">
+                            OUR TEAM MEMBERS
+                        </h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for realtor in realtors %}
+                        {% image realtor.image original as realtor_image %}
+                        <div class="col-md-4">
+                            <div class="card box-shadow member_wrap p-3 shadow">
+                                <img class="card-img-top" src="{{ realtor_image.url }}" alt="{{ realtor_image.alt }}">
+                                <div class="card-body text-center">
+
+                                    <p class="card-text font-weight-bold">{{ realtor.name }}</p>
+                                    <p class="card-text">
+                                        {{ realtor.position_title }}
+                                    </p>
+                                    <p class="card-text">
+                                        {{ realtor.short_description }}
+                                    </p>
+                                    <p class="card-text view-profile">
+                                        {% for item in settings.site_settings.SiteSettings.realtors.all %}
+                                            <a href="/{{ item.slug }}/{{ realtor.slug }}" class="stretched-link">
+                                                {{ item.profile_link }}
+                                            </a>
+                                        {% endfor %}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- ====== END REALTOR ======= -->
+</div>
+{% endblock %}

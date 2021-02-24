@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+
+{% block content %}
+<!-- ====== PAGE DETAIL 1 ======= -->
+<div class="container page_detail py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-3 title">
+                {{ self.title }}
+            </h1>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4 box-shadow p-3">
+                <div class="card-text detail_page_form">
+                    <form action="{% pageurl page %}" class="page_detail_form" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" required name="email" id="email" placeholder="Email">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea class="form-control" name="description" id="description" rows="3"
+                                placeholder="Hello I am interested in this project"></textarea>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" name="term_condition" id="term_condition">
+                            <label class="form-check-label" for="Term and Conditions">
+                                By submitting this form I agree to <a href="#" class="checkbox_link">Terms
+                                    and Conditions</a>
+                            </label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-block">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        
+        </div>
+
+        <div class="col-md-4">
+            <div class="card box-shadow member_wrap p-3">
+                <div class="card-body"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ====== END PAGE DETAIL ======= -->
+{% endblock %}

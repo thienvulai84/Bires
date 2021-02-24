@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block title %}
+    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ self.search_description }}">
+{% endblock %}
+
+{% block content %}
+{% load blog_extras %}
+    <!-- ====== LISTING BLOG 1 ======= -->
+    <div class="container mt-5 listing-blog">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="mb-5">
+                    {{ self.title }}
+                </h1>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            
+            <div class="col-md-9">
+                
+                {% for blog in blog_page_object %}
+                    {% image blog.featured_image fill-240x160 as img %}
+                    <a href="{{ blog.slug }}">
+                        <div class="card border-0 mb-4">
+                            <div class="row no-gutters">
+                                <div class="col-auto text-center">
+                                    <img src="{{ img.url }}" class="img-fluid" alt="">
+                                </div>
+                                <div class="col mb-4">
+                                    <div class="card-block pl-4">
+                                        <h4 class="card-title mt-0 pt-0">
+                                            {{ blog.title }}
+                                        </h4>
+                                        <p class="card-text content mt-2">
+                                            {{ blog.content|truncatewords:15 }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+
+                <div>
+                    <nav aria-label="pagination">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link {% if not blog_page_object.has_previous %}btn disabled{% endif %}" 
+                                    href="{% if blog_page_object.has_previous %}{% my_url blog_page_object.previous_page_number 'page' request.GET.urlencode %}{% else %}{% my_url blog_page_object.project_number 'page' request.GET.urlencode %}{% endif %}">
+                                    <i class="fas fa-caret-left" style="color: #E40F2B;"></i>
+                                </a>
+                            </li>
+                            {% for i in blog_page_object.paginator.page_range %}
+                                <li class="page-item {% if i == blog_page_object.number %}active{% endif %}">
+                                    <a class="page-link" href="{% my_url i 'page' request.GET.urlencode %}">{{ i }} 
+                                        <span class="sr-only">(current)</span></a>
+                                </li>
+                            {% endfor %}
+                            <li class="page-item">
+                                <a class="page-link {% if not blog_page_object.has_next %}btn disabled{% endif %}" 
+                                    href="{% if blog_page_object.has_next %}{% my_url blog_page_object.next_page_number 'page' request.GET.urlencode %}{% else %}{% my_url blog_page_object.project_number 'page' request.GET.urlencode %}{% endif %}">
+                                    <i class="fas fa-caret-right" style="color: #E40F2B;"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>            
+            </div>
+
+            <div class="col-md-3">
+                <div class="card member_wrap">
+                    <div class="card-body">
+                        <p class="card-text text-uppercase font-weight-bold">search blogs</p>
+                        <div class="card-text">
+                            <form method="get">
+                                <p>
+                                    <input type="text" name="search_content_and_title" id="id_search_content_and_title" class="form-control" placeholder="Search content/title">
+                                </p>
+                                <button type="submit" class="btn btn-block btn_filter mt-2 form-control">Search</button>
+                            </form>
+                            <hr class="divider">
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    {% for item in settings.site_settings.SiteSettings.categories %}
+                            {{ item.category_blog_detail }}
+                    {% endfor %}
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <!-- ====== END LISTING BLOG 1 ======= -->
+{% endblock %}
